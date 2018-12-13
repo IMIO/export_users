@@ -1,7 +1,7 @@
 IMIO export users to authentic
 ==============================
 
-This project is used to migrated Plone users to
+This project is used to migrated Plone users to csv file, which can be use by authentic.
 
 Plone
 -----
