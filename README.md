@@ -14,6 +14,6 @@ First, clone this repo on servers
 
 Then go to your instance directory and use script as
 
-    $ bin/instance1 run /home/zope/export_users/export_plone_users.py
+    $ bin/instance1 run /home/zope/export_users/export_plone_users.py --plone-path Plone
 
 And now you have a new users.csv file with all users.
