@@ -98,6 +98,9 @@ def create_csv(users, exported_filename='users.csv', delimiter=','):
 if __name__ == '__main__':
     args = parser.parse_args()
     plone_path = args.plone_path
-    portal = get_site(app, plone_path)  # noqa
+    if not plone_path and obj:
+        portal = obj
+    else:
+        portal = get_site(app, plone_path)  # noqa
     users = get_users(portal)
     create_csv(users)
