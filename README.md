@@ -14,7 +14,7 @@ First, clone this repo on servers
 
 Then go to your instance directory and use script as
 
-    $ bin/instance1 run /home/zope/export_users/export_plone_users.py --plone-path Plone
+    $ bin/instance1 -O Plone run /home/zope/export_users/export_plone_users.py
 
 OR
 
