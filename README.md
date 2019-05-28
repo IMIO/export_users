@@ -27,5 +27,6 @@ And now you have a new users.csv file with all users.
 
 Todo
 ----
+- Add arguments to choose app_id and mun_id
 - Send exported users to centralized data base
 - Do not export test users
