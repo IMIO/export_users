@@ -26,12 +26,21 @@ parser.add_argument(
     "-a",
     dest="app_id",
     help="Set application id (example: iA.Smartweb, iA.Delib, ...)",
+    required=True,
     choices=app_ids,
 )
 parser.add_argument(
     "-m",
     dest="mun_id",
     help="Set municipality id (example: liege, namur, ...)",
+    required=True,
+    default="",
+)
+parser.add_argument(
+    "-s",
+    dest="mun_slug",
+    help="Set municipality slug, slug it's a company number from 'Banque-Carrefour des Entreprises'",
+    required=True,
     default="",
 )
 
@@ -46,7 +55,8 @@ if "-c" in sys.argv:
 arg = parser.parse_args()
 mun_id = arg.mun_id
 app_id = arg.app_id
-
+mun_slug = arg.mun_slug
+formated_app_id = app_id.lower().replace(".", "")
 app_name = "users"
 memroy_base_url = "http://memory-prod1.imio.be:6543"
 # memroy_base_url = "http://localhost:6543"
@@ -61,12 +71,16 @@ def get_users():
         user = {}
         user["app_id"] = app_id
         user["mun_id"] = mun_id
+        user["mun_slug"] = mun_slug
         user["user_id"] = member.getId()
         user["username"] = member.getId()
         user["content_id"] = member.getId()
         user["fullname"] = member.getProperty("fullname", member.getUserName())
         user["email"] = member.getProperty("email", None)
         user["password"] = passwords.get(user["user_id"])
+        allowed_services = []
+        allowed_services.append("{0}-{1}".format(mun_id, formated_app_id))
+        user["allowed_services"] = allowed_services
         users.append(user)
     return users
 

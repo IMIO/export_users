@@ -14,7 +14,7 @@ First, clone this repo on servers
 
 Then go to your instance directory and use script as
 
-    $ bin/instance1 -O Plone run /home/imio/export_users/export_plone_users.py -a iA.Smartweb -m liege
+    $ bin/instance1 -O Plone run /home/imio/export_users/export_plone_users.py -a iA.Smartweb -m liege -s 80265465464
 
 OR
 
