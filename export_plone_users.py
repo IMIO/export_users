@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
-from AccessControl.SecurityManagement import newSecurityManager
 from plone import api
-from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
-from Testing import makerequest
-from zope.component.hooks import setSite
-from zope.globalrequest import setRequest
 
 import argparse
 import csv
 import logging
 import requests
 import sys
+
+
+app_ids = ["iA.Smartweb", "iA.Delib", "iA.Docs", "iA.Urban", "iA.PST"]
 
 
 logger = logging.getLogger("export_plone_users.py")
@@ -24,18 +22,33 @@ ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 parser = argparse.ArgumentParser(description="Run a script")
-# parser.add_argument(
-#     "--plone-path",
-#     dest="plone_path",
-#     help="Set plone path (example: liege/liege)",
-#     default="",
-# )
-parser.add_argument("-c")  # use to bin/instance run script.py
+parser.add_argument(
+    "-a",
+    dest="app_id",
+    help="Set application id (example: iA.Smartweb, iA.Delib, ...)",
+    choices=app_ids,
+)
+parser.add_argument(
+    "-m",
+    dest="mun_id",
+    help="Set municipality id (example: liege, namur, ...)",
+    default="",
+)
 
-mun_id = "liege"
-app_id = "iA.Web"
+# parser.add_argument("-c")  # use to bin/instance run script.py
+
+# remove -c script_name from args before argparse runs:
+if "-c" in sys.argv:
+    index = sys.argv.index("-c")
+    del sys.argv[index]
+    del sys.argv[index]
+
+arg = parser.parse_args()
+mun_id = arg.mun_id
+app_id = arg.app_id
+
 app_name = "users"
-memroy_base_url = "http://localhost:6543"
+memroy_base_url = "http://memory-prod1.imio.be:6543"
 
 
 def get_users():
@@ -108,6 +121,5 @@ def export_to_memory(users):
 
 
 if __name__ == "__main__":
-    args = parser.parse_args()
     users = get_users()
     export_to_memory(users)
