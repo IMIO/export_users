@@ -25,6 +25,12 @@ Using imio.updates (to run on all / selected instances)
 And now you have a new users.csv file with all users.
 
 
+Delete bad import
+-----------------
+User REST command with curl (for example)
+
+    $ curl -X DELETE http://localhost:6543/users/liege/iA.Smartweb
+
 Todo
 ----
 - [X] Add arguments to choose app_id and mun_id

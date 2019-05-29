@@ -49,6 +49,7 @@ app_id = arg.app_id
 
 app_name = "users"
 memroy_base_url = "http://memory-prod1.imio.be:6543"
+# memroy_base_url = "http://localhost:6543"
 
 
 def get_users():
@@ -61,6 +62,7 @@ def get_users():
         user["app_id"] = app_id
         user["mun_id"] = mun_id
         user["user_id"] = member.getId()
+        user["username"] = member.getId()
         user["content_id"] = member.getId()
         user["fullname"] = member.getProperty("fullname", member.getUserName())
         user["email"] = member.getProperty("email", None)
