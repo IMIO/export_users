@@ -85,10 +85,17 @@ def create_csv(users, exported_filename="users.csv", delimiter=","):
         logger.info("{0} users exported on {1}".format(len(users), exported_filename))
 
 
+def add_root():
+    url = "{0}/{1}".format(memroy_base_url, app_name)
+    req = requests.get(url)
+    if req.status_code == 404:
+        requests.post(memroy_base_url, json={"app_id": app_name})
+
+
 def add_municipality(mun_id):
     url = "{0}/{1}".format(memroy_base_url, app_name)
     req = requests.get(url)
-    if mun_id not in req.json():
+    if not req or mun_id not in req.json():
         params = {"container_id": mun_id}
         req = requests.post(url, json=params)
 
@@ -123,5 +130,6 @@ def export_to_memory(users):
 
 
 if __name__ == "__main__":
+    add_root()
     users = get_users()
     export_to_memory(users)
