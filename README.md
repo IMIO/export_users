@@ -25,6 +25,15 @@ Using imio.updates (to run on all / selected instances)
 And now you have a new users.csv file with all users.
 
 
+
+Authentic
+---------
+To use this project in docker-teleservice container :
+
+$ authentic2-multitenant-manage tenant_command runscript -d COMMUNE-auth.DOMAIN export-authentic-users.py -a iA.Teleservice -m liege -s 80265465464
+
+
+
 Delete bad import
 -----------------
 User REST command with curl (for example)
