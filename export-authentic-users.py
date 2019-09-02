@@ -122,6 +122,8 @@ def get_users():
         current_user["username"] = user.username
         current_user["content_id"] = user.uuid
         current_user["fullname"] = u"{} {}".format(user.first_name, user.last_name)
+        current_user["first_name"] = user.first_name
+        current_user["last_name"] = user.last_name
         current_user["email"] = user.email
         current_user["password"] = user.password
         allowed_services = []
