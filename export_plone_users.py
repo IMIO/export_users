@@ -75,7 +75,12 @@ def get_users():
         user["user_id"] = member.getId()
         user["username"] = member.getId()
         user["content_id"] = member.getId()
-        user["fullname"] = member.getProperty("fullname", member.getUserName())
+        user["fullname"] = member.getProperty("fullname", member.getUserName()).strip()
+        user["first_name"], user["last_name"] = (
+            user["fullname"].split(" ", 1)
+            if len(user["fullname"].split(" ")) > 1
+            else [user["fullname"], ""]
+        )
         user["email"] = member.getProperty("email", None)
         user["password"] = passwords.get(user["user_id"])
         allowed_services = []
