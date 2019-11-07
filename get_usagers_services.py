@@ -55,7 +55,7 @@ def get_services():
         service["open_to_all"] = True
         services.append(service)
     result["services"] = services
-    result["locality"] = {"name": "Liege, AC"}
+    result["locality"] = {"name": "Liege, AC", "slug": "80265465464"}
     return result
 
 
