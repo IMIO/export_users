@@ -96,10 +96,10 @@ def create_csv(users, exported_filename="users.csv", delimiter=","):
             csvfile, delimiter=delimiter, quotechar="|", quoting=csv.QUOTE_MINIMAL
         )
         # first_line = users[0].keys()
-        first_line = ["id", "name", "email", "password"]
+        first_line = ["user_id", "username", "email", "password"]
         filewriter.writerow(first_line)
         for user in users:
-            user_line = [user[id] for id in first_line]
+            user_line = [user[user_id] for user_id in first_line]
             filewriter.writerow(user_line)
         logger.info("{0} users exported on {1}".format(len(users), exported_filename))
 
