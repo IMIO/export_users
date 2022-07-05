@@ -6,6 +6,7 @@ import csv
 import logging
 import requests
 import sys
+import os
 
 
 app_ids = ["iA.Smartweb", "iA.Delib", "iA.Docs", "iA.Urban", "iA.PST"]
@@ -26,21 +27,21 @@ parser.add_argument(
     "-a",
     dest="app_id",
     help="Set application id (example: iA.Smartweb, iA.Delib, ...)",
-    required=True,
+    required=False,
     choices=app_ids,
 )
 parser.add_argument(
     "-m",
     dest="mun_id",
     help="Set municipality id (example: liege, namur, ...)",
-    required=True,
+    required=False,
     default="",
 )
 parser.add_argument(
     "-s",
     dest="mun_slug",
     help="Set municipality slug, slug it's a company number from 'Banque-Carrefour des Entreprises'",
-    required=True,
+    required=False,
     default="",
 )
 
@@ -53,9 +54,9 @@ if "-c" in sys.argv:
     del sys.argv[index]
 
 arg = parser.parse_args()
-mun_id = arg.mun_id
-app_id = arg.app_id
-mun_slug = arg.mun_slug
+mun_id = os.getenv('mun_id') or arg.mun_id
+app_id = os.getenv('app_id') or arg.app_id
+mun_slug = os.getenv('mun_slug') or arg.mun_slug
 formated_app_id = app_id.lower().replace(".", "")
 app_name = "users"
 memroy_base_url = "http://memory-prod1.imio.be:6543"
@@ -96,10 +97,10 @@ def create_csv(users, exported_filename="users.csv", delimiter=","):
             csvfile, delimiter=delimiter, quotechar="|", quoting=csv.QUOTE_MINIMAL
         )
         # first_line = users[0].keys()
-        first_line = ["id", "name", "email", "password"]
+        first_line = ["user_id", "username", "email", "password"]
         filewriter.writerow(first_line)
         for user in users:
-            user_line = [user[id] for id in first_line]
+            user_line = [user[user_id] for user_id in first_line]
             filewriter.writerow(user_line)
         logger.info("{0} users exported on {1}".format(len(users), exported_filename))
 
